@@ -7,11 +7,9 @@ public class Task2 {
         Thread.sleep(delay * 1000L);
         return number * number;
     }
-
     public static void task2() {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("Введите число (или 'exit' для выхода):");
             String input = scanner.nextLine();
@@ -29,7 +27,6 @@ public class Task2 {
                 System.out.println("Произошла ошибка при обработке задачи.");
             }
         }
-
         // Завершаем работу пула потоков
         executorService.shutdown();
     }

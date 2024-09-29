@@ -1,5 +1,4 @@
 import java.util.concurrent.*;
-
 public class Task1 {
     public static int firstWay(int[] arr) throws InterruptedException {
         int sum = 0;
@@ -13,14 +12,11 @@ public class Task1 {
         ExecutorService executor = Executors.newFixedThreadPool(numThreads); // создаем пул потоков
         int len = arr.length;  // длина массива
         int chunkSize = len / numThreads;  // размер части для каждого потока
-
         Future<Integer>[] futures = new Future[numThreads]; // массив Future для хранения результатов
-
         // Запускаем каждый поток для расчета суммы своей части массива
         for (int i = 0; i < numThreads; i++) {
             final int start = i * chunkSize;
             final int end = (i == numThreads - 1) ? len : (i + 1) * chunkSize;
-
             // Определяем задачу для потока
             futures[i] = executor.submit(new Callable<Integer>() {
                 @Override
@@ -34,14 +30,11 @@ public class Task1 {
                 }
             });
         }
-
         int totalSum = 0;
-
         // Собираем результаты из всех потоков
         for (int i = 0; i < numThreads; i++) {
             totalSum += futures[i].get(); // get() блокирует выполнение до завершения потока
         }
-
         executor.shutdown(); // Останавливаем ExecutorService
         return totalSum;
     }
